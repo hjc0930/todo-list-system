@@ -1,4 +1,4 @@
-package com.hjc.todolist.mapper;
+package com.hjc.todolist.dao;
 
 import com.hjc.todolist.entity.TodoLists;
 import com.hjc.todolist.utils.PageUtil;
@@ -16,7 +16,6 @@ public interface TodoListsMapper {
 
     int insert(TodoLists todoLists);
     int update(TodoLists todoLists);
-    int updateContain(TodoLists todoItems);
     int deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
 }
 

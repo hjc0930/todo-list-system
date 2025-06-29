@@ -1,6 +1,5 @@
-package com.hjc.todolist.mapper;
+package com.hjc.todolist.dao;
 
-import com.hjc.todolist.entity.TodoLists;
 import com.hjc.todolist.entity.UserAuths;
 import com.hjc.todolist.utils.PageUtil;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,7 +15,6 @@ public interface UserAuthsMapper {
     List<UserAuths> selectByPage(PageUtil pageParams);
     int insert(UserAuths userAuths);
     int update(UserAuths userAuths);
-    int updateContain(UserAuths todoItems);
     int deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
 }
 

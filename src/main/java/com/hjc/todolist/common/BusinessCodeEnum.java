@@ -5,7 +5,6 @@ public enum BusinessCodeEnum {
     PARAM_ERROR(40000, "参数错误"),
     SYSTEM_ERROR(50000, "系统异常");
 
-
     private final int code;
     private final String msg;
 

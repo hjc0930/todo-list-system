@@ -1,4 +1,4 @@
-package com.hjc.todolist.mapper;
+package com.hjc.todolist.dao;
 
 import com.hjc.todolist.entity.Users;
 import com.hjc.todolist.utils.PageUtil;
@@ -15,7 +15,6 @@ public interface UsersMapper {
     List<Users> selectByPage(PageUtil pageParams);
     int insert(Users users);
     int update(Users users);
-    int updateContain(Users users);
     int deleteById(@Param("id") Long id);
 }
 

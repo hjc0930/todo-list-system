@@ -1,11 +1,12 @@
 package com.hjc.todolist.service;
 
+import com.hjc.todolist.dto.CreateTodoListDto;
 import com.hjc.todolist.entity.TodoLists;
 
 import java.util.List;
 
 public interface TodoListService {
-    String addTodoList(TodoLists todoItems);
+    String addTodoList(CreateTodoListDto createTodoListDto);
     String updateTodoList(TodoLists todoItems);
     String deleteTodoList(List<Long> ids);
     List<TodoLists> getAllTodoList();

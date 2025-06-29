@@ -13,8 +13,8 @@ CREATE TABLE users (
 CREATE TABLE user_auths (
     `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
     `user_id` BIGINT NOT NULL COMMENT '关联用户ID',
-    `identity_type` VARCHAR(20) NOT NULL COMMENT '登录类型（email/phone/weixin）',
-    `identifier` VARCHAR(100) NOT NULL COMMENT '标识（邮箱/手机号/第三方ID）',
+    `identity_type` VARCHAR(20) NOT NULL COMMENT '登录类型（email/phone/weichat）',
+    `identifier` VARCHAR(100) NOT NULL COMMENT '标识（email/phone/第三方ID）',
     `credential` VARCHAR(200) NOT NULL COMMENT '凭证（哈希密码/Token）',
     `verified` TINYINT DEFAULT 0 COMMENT '是否验证：0-否，1-是',
     UNIQUE KEY `uk_user_auths` (`user_id`, `identifier`)

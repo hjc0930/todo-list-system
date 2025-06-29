@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hjc.todolist.mapper.UserAuthsMapper">
+<mapper namespace="com.hjc.todolist.dao.UserAuthsMapper">
     <resultMap id="UserAuthsResultMap" type="com.hjc.todolist.entity.UserAuths">
         <id property="id" column="id"/>
         <result property="userId" column="user_id"/>
@@ -32,16 +32,24 @@
             LIMIT #{limit},#{pageSize}
         </if>
     </select>
-    <insert id="insert" parameterType="com.hjc.todolist.entity.UserAuths">
-        INSERT INTO user_auths (user_id, identity_type, identifier, credential, verified)
-        VALUES (#{userId}, #{identityType}, #{identifier}, #{credential}, #{verified})
+    <insert id="insert" parameterType="com.hjc.todolist.entity.UserAuths" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_auths
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="identityType != null">identity_type,</if>
+            <if test="identifier != null">identifier,</if>
+            <if test="credential != null">credential,</if>
+            <if test="verified != null">verified,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="identityType != null">#{identityType},</if>
+            <if test="identifier != null">#{identifier},</if>
+            <if test="credential != null">#{credential},</if>
+            <if test="verified != null">#{verified},</if>
+        </trim>
     </insert>
     <update id="update" parameterType="com.hjc.todolist.entity.UserAuths">
-        UPDATE user_auths
-        SET user_id=#{userId}, identity_type=#{identityType}, identifier=#{identifier}, credential=#{credential}, verified=#{verified}
-        WHERE id=#{id}
-    </update>
-    <update id="updateContain" parameterType="com.hjc.todolist.entity.UserAuths">
         UPDATE user_auths
         <set>
             <if test="userId != null">user_id = #{userId},</if>

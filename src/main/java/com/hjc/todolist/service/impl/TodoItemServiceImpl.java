@@ -4,7 +4,7 @@ import com.hjc.todolist.common.BusinessCodeEnum;
 import com.hjc.todolist.common.BusinessException;
 import com.hjc.todolist.common.ResultMessageConstant;
 import com.hjc.todolist.entity.TodoItems;
-import com.hjc.todolist.mapper.TodoItemsMapper;
+import com.hjc.todolist.dao.TodoItemsMapper;
 import com.hjc.todolist.service.TodoItemService;
 import com.hjc.todolist.utils.PageUtil;
 import jakarta.annotation.Resource;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class TodoItemImplService implements TodoItemService {
+public class TodoItemServiceImpl implements TodoItemService {
     @Resource
     private TodoItemsMapper todoItemsMapper;
 
