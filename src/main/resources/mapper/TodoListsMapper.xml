@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjc.todolist.mapper.TodoListsMapper">
+    <resultMap id="TodoListsResultMap" type="com.hjc.todolist.entity.TodoLists">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="status" column="status"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="deletedTime" column="deleted_time"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="deleteUser" column="delete_user"/>
+    </resultMap>
+    <sql id="TodoListsColumns">
+        id, name, status, created_time, updated_time, deleted_time, create_user, update_user, delete_user
+    </sql>
+
+    <select id="selectById" resultMap="TodoListsResultMap">
+        SELECT <include refid="TodoListsColumns" /> FROM todo_lists WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="TodoListsResultMap">
+        SELECT <include refid="TodoListsColumns" /> FROM todo_lists
+    </select>
+    <select id="selectByIds" resultType="com.hjc.todolist.entity.TodoLists">
+        SELECT <include refid="TodoListsColumns" />
+        FROM todo_lists
+        WHERE id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectByPage" parameterType="Map" resultType="com.hjc.todolist.entity.TodoLists">
+        SELECT <include refid="TodoListsColumns" />
+        FROM todo_lists
+        ORDER BY created_time DESC
+        <if test="limit !== null and pageSize != null">
+            LIMIT #{limit},#{pageSize}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.hjc.todolist.entity.TodoLists">
+        INSERT INTO todo_lists (name, status, created_time, updated_time, deleted_time, create_user, update_user, delete_user)
+        VALUES (#{name}, #{status}, #{createdTime}, #{updatedTime}, #{deletedTime}, #{createUser}, #{updateUser}, #{deleteUser})
+    </insert>
+
+    <update id="update" parameterType="com.hjc.todolist.entity.TodoLists">
+        UPDATE todo_lists
+        SET name=#{name}, status=#{status}, created_time=#{createdTime}, updated_time=#{updatedTime}, deleted_time=#{deletedTime}, create_user=#{createUser}, update_user=#{updateUser}, delete_user=#{deleteUser}
+        WHERE id=#{id}
+    </update>
+    <update id="updateContain">
+        UPDATE todo_lists
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+            <if test="deletedTime != null">deleted_time = #{deletedTime},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="deleteUser != null">delete_user = #{deleteUser},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <update id="deleteById">
+        UPDATE todo_lists
+        SET deleted_time = NOW(), delete_user = #{deletedUserId}
+        WHERE id = #{id}
+    </update>
+</mapper>

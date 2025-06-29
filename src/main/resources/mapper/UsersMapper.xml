@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjc.todolist.mapper.UsersMapper">
+    <resultMap id="UsersResultMap" type="com.hjc.todolist.entity.Users">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="avatar" column="avatar"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="deletedTime" column="deleted_time"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="deleteUser" column="delete_user"/>
+    </resultMap>
+    <sql id="UsersColumns">
+        id, username, avatar, created_time, updated_time, deleted_time, create_user, update_user, delete_user
+    </sql>
+
+    <select id="selectById" resultMap="UsersResultMap">
+        SELECT <include refid="UsersColumns" /> FROM users WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="UsersResultMap">
+        SELECT <include refid="UsersColumns" /> FROM users
+    </select>
+    <select id="selectByIds" resultMap="UsersResultMap">
+        SELECT <include refid="UsersColumns" />
+        FROM users
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectByPage" parameterType="Map" resultMap="UsersResultMap">
+        SELECT <include refid="UsersColumns" />
+        FROM users
+        ORDER BY created_time DESC
+        <if test="limit !== null and pageSize != null">
+            LIMIT #{limit},#{pageSize}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.hjc.todolist.entity.Users">
+        INSERT INTO users (username, nickname, avatar, gender, birthday, email, phone, created_time, updated_time, deleted_time, create_user, update_user, delete_user)
+        VALUES (#{username}, #{nickname}, #{avatar}, #{gender}, #{birthday}, #{email}, #{phone}, #{createdTime}, #{updatedTime}, #{deletedTime}, #{createUser}, #{updateUser}, #{deleteUser})
+    </insert>
+
+    <update id="update" parameterType="com.hjc.todolist.entity.Users">
+        UPDATE users
+        SET username=#{username}, nickname=#{nickname}, avatar=#{avatar}, gender=#{gender}, birthday=#{birthday}, email=#{email}, phone=#{phone}, created_time=#{createdTime}, updated_time=#{updatedTime}, deleted_time=#{deletedTime}, create_user=#{createUser}, update_user=#{updateUser}, delete_user=#{deleteUser}
+        WHERE id=#{id}
+    </update>
+    <update id="updateContain" parameterType="com.hjc.todolist.entity.Users">
+        UPDATE users
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <update id="deleteById">
+        UPDATE users
+        SET deleted_time = NOW(), delete_user = #{deleteUser}
+        WHERE id = #{id}
+    </update>
+</mapper>
+

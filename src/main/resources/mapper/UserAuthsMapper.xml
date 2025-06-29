@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjc.todolist.mapper.UserAuthsMapper">
+    <resultMap id="UserAuthsResultMap" type="com.hjc.todolist.entity.UserAuths">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="identityType" column="identity_type"/>
+        <result property="identifier" column="identifier"/>
+        <result property="credential" column="credential"/>
+        <result property="verified" column="verified"/>
+    </resultMap>
+    <sql id="BaseColumnList">id, user_id, identity_type, identifier, credential, verified</sql>
+
+    <select id="selectById" resultMap="UserAuthsResultMap">
+        SELECT <include refid="BaseColumnList" /> FROM user_auths WHERE id = #{id}
+    </select>
+    <select id="selectAll" resultMap="UserAuthsResultMap">
+        SELECT <include refid="BaseColumnList" /> FROM user_auths
+    </select>
+    <select id="selectByIds" resultMap="UserAuthsResultMap">
+        SELECT <include refid="BaseColumnList" />
+        FROM user_auths WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectByPage" parameterType="Map" resultMap="UserAuthsResultMap">
+        SELECT <include refid="BaseColumnList" />
+        FROM user_auths
+        ORDER BY id DESC
+        <if test="limit !== null and pageSize != null">
+            LIMIT #{limit},#{pageSize}
+        </if>
+    </select>
+    <insert id="insert" parameterType="com.hjc.todolist.entity.UserAuths">
+        INSERT INTO user_auths (user_id, identity_type, identifier, credential, verified)
+        VALUES (#{userId}, #{identityType}, #{identifier}, #{credential}, #{verified})
+    </insert>
+    <update id="update" parameterType="com.hjc.todolist.entity.UserAuths">
+        UPDATE user_auths
+        SET user_id=#{userId}, identity_type=#{identityType}, identifier=#{identifier}, credential=#{credential}, verified=#{verified}
+        WHERE id=#{id}
+    </update>
+    <update id="updateContain" parameterType="com.hjc.todolist.entity.UserAuths">
+        UPDATE user_auths
+        <set>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="identityType != null">identity_type = #{identityType},</if>
+            <if test="identifier != null">identifier = #{identifier},</if>
+            <if test="credential != null">credential = #{credential},</if>
+            <if test="verified != null">verified = #{verified},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <update id="deleteById">
+        UPDATE user_auths
+        SET deleted_time = NOW(), delete_user = #{deletedUserId}
+        WHERE id = #{id}
+    </update>
+</mapper>
