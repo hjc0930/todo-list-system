@@ -1,6 +1,8 @@
 package com.hjc.todolist.utils;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.LinkedHashMap;
 
 @Data

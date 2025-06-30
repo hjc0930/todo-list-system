@@ -21,25 +21,25 @@ CREATE TABLE user_auths (
 );
 
 CREATE TABLE todo_lists (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL COMMENT '列表名称',
-    status TINYINT DEFAULT 0 COMMENT '状态：0-进行中，1-已完成，2-已归档',
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    deleted_time DATETIME COMMENT '软删除时间',
-    create_user BIGINT COMMENT '创建人ID',
-    update_user BIGINT COMMENT '更新人ID',
-    delete_user BIGINT COMMENT '删除人ID'
+    `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL COMMENT '列表名称',
+    `status` TINYINT DEFAULT 0 COMMENT '状态：0-进行中，1-已完成，2-已归档',
+    `created_time` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted_time` DATETIME COMMENT '软删除时间',
+    `create_user` BIGINT COMMENT '创建人ID',
+    `update_user` BIGINT COMMENT '更新人ID',
+    `delete_user` BIGINT COMMENT '删除人ID'
 );
 
 CREATE TABLE todo_items (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    list_id BIGINT NOT NULL COMMENT '所属列表ID',
-    content TEXT NOT NULL COMMENT '事项内容',
-    created_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_time DATETIME COMMENT '软删除时间',
-    create_user BIGINT COMMENT '创建人ID',
-    update_user BIGINT COMMENT '更新人ID',
-    delete_user BIGINT COMMENT '删除人ID'
+    `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `list_id` BIGINT NOT NULL COMMENT '所属列表ID',
+    `content` TEXT NOT NULL COMMENT '事项内容',
+    `created_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `updated_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_time` DATETIME COMMENT '软删除时间',
+    `create_user` BIGINT COMMENT '创建人ID',
+    `update_user` BIGINT COMMENT '更新人ID',
+    `delete_user` BIGINT COMMENT '删除人ID'
 );

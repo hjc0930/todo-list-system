@@ -32,6 +32,14 @@
             LIMIT #{limit},#{pageSize}
         </if>
     </select>
+    <select id="selectByUserIds" resultMap="UserAuthsResultMap">
+        SELECT <include refid="BaseColumnList" />
+        FROM user_auths
+        WHERE user_id IN
+        <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </select>
     <insert id="insert" parameterType="com.hjc.todolist.entity.UserAuths" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_auths
         <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -14,8 +14,8 @@ public interface TodoListsMapper {
     List<TodoLists> selectByIds(@Param("ids") List<Long> ids);
     List<TodoLists> selectByPage(PageUtil pageParams);
 
-    int insert(TodoLists todoLists);
-    int update(TodoLists todoLists);
-    int deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
+    Long insert(TodoLists todoLists);
+    Long update(TodoLists todoLists);
+    Long deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
 }
 

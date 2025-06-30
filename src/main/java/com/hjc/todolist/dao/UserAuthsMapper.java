@@ -13,8 +13,9 @@ public interface UserAuthsMapper {
     List<UserAuths> selectAll();
     List<UserAuths> selectByIds(@Param("ids") List<Long> ids);
     List<UserAuths> selectByPage(PageUtil pageParams);
-    int insert(UserAuths userAuths);
-    int update(UserAuths userAuths);
-    int deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
+    List<UserAuths> selectByUserIds(@Param("userIds") List<Long> userIds);
+    Long insert(UserAuths userAuths);
+    Long update(UserAuths userAuths);
+    Long deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
 }
 

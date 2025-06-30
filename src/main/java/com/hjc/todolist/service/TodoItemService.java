@@ -12,4 +12,5 @@ public interface TodoItemService {
     TodoItems getTodoItemById(Long id);
     List<TodoItems> getTodoItemByIds(List<Long> ids);
     List<TodoItems> getTodoItemByPage(Integer page, Integer pageSize);
+    List<TodoItems> getTodoItemByListIds(List<Long> listIds);
 }

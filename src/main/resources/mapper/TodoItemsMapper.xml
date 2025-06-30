@@ -23,20 +23,28 @@
     <select id="selectAll" resultMap="TodoItemsResultMap">
         SELECT <include refid="TodoItemsColumns" /> FROM todo_items
     </select>
-    <select id="selectByIds" resultType="com.hjc.todolist.entity.TodoItems">
+    <select id="selectByIds" resultMap="TodoItemsResultMap">
         SELECT <include refid="TodoItemsColumns" />
         FROM todo_items WHERE id IN
         <foreach collection="ids" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
-    <select id="selectByPage" parameterType="Map" resultType="com.hjc.todolist.entity.TodoItems">
+    <select id="selectByPage" parameterType="Map" resultMap="TodoItemsResultMap">
         SELECT <include refid="TodoItemsColumns" />
         FROM todo_items
         ORDER BY created_time DESC
         <if test="limit !== null and pageSize != null">
             LIMIT #{limit},#{pageSize}
         </if>
+    </select>
+    <select id="selectByListIds" resultMap="TodoItemsResultMap">
+        SELECT <include refid="TodoItemsColumns" />
+        FROM todo_items
+        WHERE list_id IN
+        <foreach collection="listIds" item="listId" open="(" separator="," close=")">
+            #{listId}
+        </foreach>
     </select>
 
     <insert id="insert" parameterType="com.hjc.todolist.entity.TodoItems" useGeneratedKeys="true" keyProperty="id">

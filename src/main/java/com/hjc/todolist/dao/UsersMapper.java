@@ -13,8 +13,8 @@ public interface UsersMapper {
     List<Users> selectAll();
     List<Users> selectByIds(@Param("ids") List<Long> ids);
     List<Users> selectByPage(PageUtil pageParams);
-    int insert(Users users);
-    int update(Users users);
-    int deleteById(@Param("id") Long id);
+    Long insert(Users users);
+    Long update(Users users);
+    Long deleteById(@Param("id") Long id);
 }
 

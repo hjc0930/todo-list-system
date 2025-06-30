@@ -11,10 +11,11 @@ public interface TodoItemsMapper {
     TodoItems selectById(Long id);
     List<TodoItems> selectAll();
     List<TodoItems> selectByIds(@Param("ids") List<Long> ids);
+    List<TodoItems> selectByListIds(@Param("listIds") List<Long> listIds);
     List<TodoItems> selectByPage(PageUtil pageParams);
 
-    int insert(TodoItems todoItems);
-    int update(TodoItems todoItems);
-    int deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
+    Long insert(TodoItems todoItems);
+    Long update(TodoItems todoItems);
+    Long deleteById(@Param("id") Long id, @Param("deletedUserId") Long deletedUserId);
 }
 
