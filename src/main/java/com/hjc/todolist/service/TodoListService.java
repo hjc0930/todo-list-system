@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TodoListService {
     String addTodoList(CreateTodoListDto createTodoListDto);
-    String updateTodoList(TodoLists todoItems);
+    String updateTodoList(Long id, CreateTodoListDto createTodoListDto);
     String deleteTodoList(Long id);
     List<TodoListResDto> getAllTodoList();
     TodoLists getTodoListById(Long id);

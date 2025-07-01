@@ -1,5 +1,7 @@
 package com.hjc.todolist.service.impl;
 
+import com.hjc.todolist.common.BusinessCodeEnum;
+import com.hjc.todolist.common.BusinessException;
 import com.hjc.todolist.dto.CreateTodoListDto;
 import com.hjc.todolist.dto.response.TodoListResDto;
 import com.hjc.todolist.entity.TodoItems;
@@ -38,12 +40,32 @@ public class TodoListServiceImpl implements TodoListService {
         return "Ok";
     }
 
+    @Transactional
     @Override
-    public String updateTodoList(TodoLists todoItems) {
-        todoListsMapper.update(todoItems);
+    public String updateTodoList(Long id, CreateTodoListDto createTodoListDto) {
+        TodoLists currentTodoList = todoListsMapper.selectById(id);
+        if(Objects.isNull(currentTodoList)) {
+            throw new BusinessException(BusinessCodeEnum.NOT_FOUND.getCode(), BusinessCodeEnum.NOT_FOUND.getMsg());
+        }
+        currentTodoList.setId(id);
+        currentTodoList.setName(createTodoListDto.getName());
+        currentTodoList.setStatus(createTodoListDto.getStatus());
+
+        Long updatedTodoListId = todoListsMapper.update(currentTodoList);
+        if (updatedTodoListId == null) {
+            throw new BusinessException(BusinessCodeEnum.PARAM_ERROR.getCode(), BusinessCodeEnum.PARAM_ERROR.getMsg());
+        }
+        TodoItems todoItems = todoItemService.getTodoItemByListId(updatedTodoListId);
+        if (Objects.isNull(todoItems)) {
+            throw new BusinessException(BusinessCodeEnum.NOT_FOUND.getCode(), BusinessCodeEnum.NOT_FOUND.getMsg());
+        }
+        todoItems.setContent(createTodoListDto.getContent());
+        todoItemService.addTodoItem(todoItems);
+
         return "OK";
     }
 
+    @Transactional
     @Override
     public String deleteTodoList(Long id) {
         todoListsMapper.deleteById(id, 0L);
@@ -54,7 +76,7 @@ public class TodoListServiceImpl implements TodoListService {
     public List<TodoListResDto> getAllTodoList() {
         List<TodoLists> todoLists = todoListsMapper.selectAll();
         List<TodoItems> todoItemsList = todoItemService.getAllTodoItem();
-        List<TodoListResDto> todoListResDtos = new ArrayList<>();
+        List<TodoListResDto> todoListResDtoList = new ArrayList<>();
 
         todoLists.stream()
                 .filter(item -> Objects.isNull(item.getDeleteUser()))
@@ -69,10 +91,10 @@ public class TodoListServiceImpl implements TodoListService {
                     .filter(todoItem -> todoItem.getListId().equals(item.getId()))
                     .map(TodoItems::getContent)
                     .forEach(todoListRes::setContent);
-            todoListResDtos.add(todoListRes);
+            todoListResDtoList.add(todoListRes);
         });
 
-        return todoListResDtos;
+        return todoListResDtoList;
     }
 
     @Override

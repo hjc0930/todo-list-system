@@ -28,4 +28,11 @@ public class TodoListController {
         List<TodoListResDto> todoLists = todoListService.getAllTodoList();
         return Result.success(todoLists);
     }
+
+    @PutMapping("update/{id}")
+    public Result<String> updateTodoList(@PathVariable Long id, @RequestBody @Valid CreateTodoListDto createTodoListDto) {
+        String result = todoListService.updateTodoList(id, createTodoListDto);
+
+        return Result.success(result);
+    }
 }

@@ -66,4 +66,9 @@ public class TodoItemServiceImpl implements TodoItemService {
     public List<TodoItems> getTodoItemByListIds(List<Long> listIds) {
         return todoItemsMapper.selectByListIds(listIds);
     }
+
+    @Override
+    public TodoItems getTodoItemByListId(Long listId) {
+        return todoItemsMapper.selectByListId(listId);
+    }
 }

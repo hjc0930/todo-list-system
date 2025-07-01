@@ -46,6 +46,11 @@
             #{listId}
         </foreach>
     </select>
+    <select id="selectByListId" resultType="com.hjc.todolist.entity.TodoItems">
+        SELECT <include refid="TodoItemsColumns" />
+        FROM todo_items
+        WHERE list_id = #{listId}
+    </select>
 
     <insert id="insert" parameterType="com.hjc.todolist.entity.TodoItems" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO todo_items

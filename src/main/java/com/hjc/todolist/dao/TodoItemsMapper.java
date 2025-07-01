@@ -12,6 +12,7 @@ public interface TodoItemsMapper {
     List<TodoItems> selectAll();
     List<TodoItems> selectByIds(@Param("ids") List<Long> ids);
     List<TodoItems> selectByListIds(@Param("listIds") List<Long> listIds);
+    TodoItems selectByListId(@Param("listId") Long listId);
     List<TodoItems> selectByPage(PageUtil pageParams);
 
     Long insert(TodoItems todoItems);
