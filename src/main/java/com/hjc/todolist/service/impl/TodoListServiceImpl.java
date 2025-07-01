@@ -55,12 +55,15 @@ public class TodoListServiceImpl implements TodoListService {
         if (updatedTodoListId == null) {
             throw new BusinessException(BusinessCodeEnum.PARAM_ERROR.getCode(), BusinessCodeEnum.PARAM_ERROR.getMsg());
         }
-        TodoItems todoItems = todoItemService.getTodoItemByListId(updatedTodoListId);
-        if (Objects.isNull(todoItems)) {
+
+        TodoItems currentTodoItems = todoItemService.getTodoItemByListId(updatedTodoListId);
+
+        if (Objects.isNull(currentTodoItems)) {
             throw new BusinessException(BusinessCodeEnum.NOT_FOUND.getCode(), BusinessCodeEnum.NOT_FOUND.getMsg());
         }
-        todoItems.setContent(createTodoListDto.getContent());
-        todoItemService.addTodoItem(todoItems);
+
+        currentTodoItems.setContent(createTodoListDto.getContent());
+        todoItemService.addTodoItem(currentTodoItems);
 
         return "OK";
     }
