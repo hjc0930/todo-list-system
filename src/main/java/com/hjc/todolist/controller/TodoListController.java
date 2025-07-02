@@ -19,8 +19,8 @@ public class TodoListController {
 
     @PostMapping("create")
     public Result<String> createTodoList(@RequestBody @Valid CreateTodoListDto createTodoListDto) {
-        String resul = todoListService.addTodoList(createTodoListDto);
-        return Result.success(resul);
+        String result = todoListService.addTodoList(createTodoListDto);
+        return Result.success(result);
     }
 
     @GetMapping("get-all")
